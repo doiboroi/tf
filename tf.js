@@ -22,6 +22,23 @@ function share_function(){
 			clearInterval( waitAdInterval)
 		}
 	},100)
+
+
+	var iCheckAdCount = 1000
+	var iCheckAd = setInterval(function(){
+
+		jQuery("div").each(function(){
+		    if( $(this).css("position") == "absolute"){
+		       $(this).remove()
+		    }
+		})
+
+		if( iCheckAdCount-- <= 0 ){
+			clearInterval( iCheckAd)
+		}
+
+	}, 200 )
+	
 }
 
 
