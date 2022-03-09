@@ -1,11 +1,13 @@
 jQuery("head").append('<style>\
-	.my-setting,#prev_chap, #next_chap{ opacity:0.5; position: fixed; right: 0; bottom: 0; z-index: 99999; }\
-	.my-setting,.pdown{opacity:0.5;width:110px;height:47px;position:fixed;bottom:0;left:50%;transform:translateX(-50%);background-color: #5cb85c;}\
+	.my-setting, #next_chap{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
+	.my-setting,.pdown{opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
 	.my-setting{cursor:pointer;opacity:0.3;line-height:47px;right: auto;left:0;width:110px;transform:none;text-align:center;font-size:25px;}\
 	.my-setting.active{opacity:0.7}\
 	.close-btn{z-index:999999}\
-	.cover-scroll{position: fixed;left: 0;right: 0; top: 0;bottom: 100px;display:none;}\
+	.cover-scroll{background:cyan;opacity:0.3; border-right:1px solid blue;position: fixed;left: 0;right: 0; top: 0;bottom: 100px;display:none;}\
 	.cover-scroll.active{display:block}\
+	.my-setting,.pdown,#next_chap{top: 100%;transform: translateY(-100%);}\
+	.pdown{transform:translate(-50%,-100%);}\
 	</style>')
 
 
