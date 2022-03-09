@@ -4,7 +4,7 @@ jQuery("head").append('<style>\
 	.my-setting{cursor:pointer;opacity:0.3;line-height:47px;right: auto;left:0;width:110px;transform:none;text-align:center;font-size:25px;}\
 	.my-setting.active{opacity:0.7}\
 	.close-btn{z-index:999999}\
-	.cover-scroll{background:cyan;opacity:0.3; border-right:1px solid blue;position: fixed;left: 0;right: 0; top: 0;bottom: 100px;display:none;}\
+	.cover-scroll{border-right:1px solid blue;position: fixed;left: 0;right: 0; top: 0;bottom: 100px;display:none;}\
 	.cover-scroll.active{display:block}\
 	.my-setting,.pdown,#next_chap{top: 100%;transform: translateY(-100%);}\
 	.pdown{transform:translate(-50%,-100%);}\
