@@ -13,7 +13,18 @@ jQuery("head").append('<style>\
 	\
 	.pdown{display:none}\
 	.pdown{opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;top: 100%;transform:translate(-50%);}\
+	\
+	\
+	\
+	.winh{position:fixed;top:0;left:0;background:green;color:yellow;padding:3px;}\
 	</style>')
+
+if( getUrlParameter('winheight') ){
+	jQuery("body").append('<div class="winh"></div>')
+	window.setInterval(function(){
+		jQuery(".winh").text( window.innerHeight )
+	}, 100 )
+}
 
 
 // cover scroll
@@ -174,3 +185,19 @@ if( window.location.href.indexOf('full.vn') != -1 ){
 	})
 }
 
+
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};
