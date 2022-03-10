@@ -1,13 +1,18 @@
 jQuery("head").append('<style>\
 	.my-setting, #next_chap{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
-	.my-setting,.pdown{opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
-	.my-setting{cursor:pointer;opacity:0.3;line-height:47px;right: auto;left:0;width:110px;transform:none;text-align:center;font-size:25px;}\
+	.my-setting{line-height:200%;opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
+	.my-setting{cursor:pointer;opacity:0.3;right: auto;left:0;width:110px;transform:none;text-align:center;font-size:25px;}\
 	.my-setting.active{opacity:0.7}\
 	.close-btn{z-index:999999}\
-	.cover-scroll{border-right:1px solid blue;position: fixed;left: 0;right: 0; top: 0;bottom: 100px;display:none;}\
+	.cover-scroll{border-right:2px solid green;position: fixed;z-index:10;left: 0;right: 0; top: 0;bottom: 0;display:none;}\
 	.cover-scroll.active{display:block}\
-	.my-setting,.pdown,#next_chap{top: 100%;transform: translateY(-100%);}\
-	.pdown{transform:translate(-50%,-100%);}\
+	/*.my-setting,#next_chap{top: 100%;transform: translateY(-100%);}*/\
+	.pdown{}\
+	\
+	\
+	\
+	.pdown{display:none}\
+	.pdown{opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;top: 100%;transform:translate(-50%);}\
 	</style>')
 
 
@@ -28,7 +33,6 @@ jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 	jQuery(window).scrollTop( onePage )
 })
 
-
 //setting
 jQuery("body").append( '<div class="my-setting"><span class="glyphicon glyphicon-cog"></span></div>' )
 jQuery(".my-setting").css("width", iNextW + "px")
@@ -36,11 +40,38 @@ jQuery("body").on("click",'.my-setting', function(){
 	jQuery(this).toggleClass("active")
 	if( jQuery(this).hasClass("active") ){
 		jQuery(".cover-scroll").css("display","block")
+		localStorage.setItem('bOpenCover', true)
 	}else{
 		jQuery(".cover-scroll").css("display","none")
-	}
 
+		localStorage.setItem('bOpenCover', "") 
+	}
 })
+
+var bOpenCover = false
+if( undefined == localStorage.getItem('bOpenCover') || localStorage.getItem('bOpenCover') == ""|| localStorage.getItem('bOpenCover') == "false" ){
+    bOpenCover = false
+}else{
+    bOpenCover = true
+}
+
+if( bOpenCover ){
+	if( !jQuery(".my-setting").hasClass("active") ){
+		jQuery(".my-setting").click()
+		localStorage.setItem('bOpenCover', true) 
+	}
+}
+
+
+
+// reset top of bottom button
+function reset_bottom_btn_top(){
+	let iWinH = window.innerHeight
+	let iNextBtnH = jQuery("#next_chap").outerHeight()
+	let iNewTop = iWinH - iNextBtnH
+	jQuery(".my-setting,.pdown,#next_chap").css("top", iNewTop + "px")
+}
+reset_bottom_btn_top()
 
 
 jQuery(window).resize(function(){
@@ -58,6 +89,8 @@ jQuery(window).resize(function(){
 
 
 	jQuery(".my-setting").css("width", iNextW + "px")
+
+	reset_bottom_btn_top()
 })
 
 function share_function(){
