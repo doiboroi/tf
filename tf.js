@@ -17,7 +17,51 @@ jQuery("head").append('<style>\
 	\
 	\
 	.winh{position:fixed;top:0;left:0;background:green;color:yellow;padding:3px;}\
+	\
+	\
+	\
+	#wrap,.chapter .chapter-c {background:black;color:#7c7c7c}\
 	</style>')
+
+var bFlip = false
+	bFlip = true
+var direction = "left"
+direction = "right"
+	
+if( bFlip == true ){
+	let iMaxWidth = window.innerHeight - 20 + "px"
+	let wWidth = window.innerWidth - 50 + 'px'
+	jQuery("head").append('<style>\
+		*{max-width:'+iMaxWidth+' !important}\
+		.navbar-header{display:none;}\
+		body{transform: rotate(-90deg);}\
+		.cover-scroll{height:5000px !important;}\
+		.my-setting, #next_chap{top:'+wWidth+' !important;opacity:0.1; transition:opacity 1s}\
+		.my-setting.active{opacity:0.2}\
+		.cover-scroll{height:'+wWidth+'}\
+	</style>')
+	jQuery("#chapter-big-container").width(window.innerHeight - 20 )
+	jQuery("body").on("keypress", function(e){
+		if( e.which == 32 ){
+			jQuery(".cover-scroll").click()
+		}
+	})
+	
+	if( direction == "right" ){
+		jQuery("head").append('<style>\
+			body{transform: rotate(90deg);transform: rotate(90deg) translateY(-120%);}\
+		</style>')
+		jQuery("body").attr("ofs", 0)
+	}
+}
+
+jQuery("body").on("mouseover", ".my-setting, #next_chap", function(){
+	jQuery(".my-setting, #next_chap").css( "opacity", "0.7" )
+})
+
+jQuery("body").on("mouseout", ".my-setting, #next_chap", function(){
+	jQuery(".my-setting, #next_chap").css( "opacity", "0.1" )
+})
 
 if( getUrlParameter('winheight') ){
 	jQuery("body").append('<div class="winh"></div>')
@@ -36,12 +80,39 @@ let iNextW = jQuery("#next_chap").outerWidth()
 let iWinW = window.innerWidth
 let iPdownW = iWinW - iNextW * 2 - 6
 jQuery(".pdown").css("width", iPdownW + "px")
+
+
 jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 	let wH = window.innerHeight
+	let wW = window.innerWidth
 	let wSc = jQuery(window).scrollTop()
+	let wScL = jQuery(window).scrollLeft();
 
 	let onePage = wH + wSc - 70
-	jQuery(window).scrollTop( onePage )
+	let onePageWidth = wW + wScL - 70
+	if( bFlip == true ){
+		if( direction == "right" ){
+			let ofs = jQuery("body").attr("ofs")
+			ofs = parseInt( ofs ) + 1 
+			jQuery("body").attr("ofs", ofs)
+			let toLeft = ofs*200 + 120
+			jQuery("body").css({"transform":"rotate(90deg) translateY(-"+toLeft+"%)"})
+			onePageWidth = jQuery("body").offset().left + 558
+			console.log( onePageWidth )
+			jQuery(".my-setting, #next_chap").attr("style", "width: 170px;top:"+onePageWidth + "px !important")
+			console.log( "onePageWidth: " + onePageWidth )
+			
+		}else{
+			jQuery(window).scrollLeft( onePageWidth );
+			onePageWidth += wW - 50
+			jQuery(".my-setting, #next_chap").attr("style", "width: 170px;top:"+onePageWidth + "px !important")
+			console.log( "onePageWidth: " + onePageWidth )
+		}
+	}else{
+		jQuery(window).scrollTop( onePage )
+	}
+	
+	
 })
 
 //setting
