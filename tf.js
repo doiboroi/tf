@@ -135,6 +135,17 @@ jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 	
 	
 })
+jQuery("body").prepend('<button class="fullscreen">Full Screen</button>')
+jQuery(".fullscreen").click(function(){
+	console.log("clicked fullscreen")
+	var elem = document.querySelector("body"); 
+	if (elem.requestFullscreen) {
+		elem.requestFullscreen();
+	}else{
+		console.log("not work")
+	}
+
+});
 
 //setting
 jQuery("body").append( '<div class="my-setting"><span class="glyphicon glyphicon-cog"></span></div>' )
