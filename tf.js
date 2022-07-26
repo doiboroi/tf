@@ -1,4 +1,4 @@
-// version 1.2
+// version 1.3
 jQuery("head").append('<style>\
 	.my-setting, #next_chap{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
 	.my-setting{line-height:200%;opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
@@ -108,7 +108,8 @@ jQuery(".pdown").css("width", iPdownW + "px")
 jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 	let wH = window.innerHeight
 	let wW = window.innerWidth
-	let wSc = jQuery(window).scrollTop()
+	//let wSc = jQuery(window).scrollTop()
+	let wSc = $('body').scrollTop()
 	let wScL = jQuery(window).scrollLeft();
 
 	let onePage = wH + wSc - 70
@@ -132,7 +133,8 @@ jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 			console.log( "onePageWidth: " + onePageWidth )
 		}
 	}else{
-		jQuery(window).scrollTop( onePage )
+		//jQuery(window).scrollTop( onePage )
+		$('html,body').animate({scrollTop:onePage}, 150);
 	}
 	
 	
