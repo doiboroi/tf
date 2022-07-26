@@ -26,7 +26,28 @@ jQuery("head").append('<style>\
 var bFlip = false
 	bFlip = true
 var direction = "left"
-direction = "right"
+direction = ""
+if( getUrlParameter('dir') == "left" || getUrlParameter('dir') == "l" || getUrlParameter('d') == "left" || getUrlParameter('d') == "l" ){
+	direction = "left"
+	if( jQuery("#next_chap").attr("href").indexOf("dir=left") == -1 ){
+		let sNewHref = jQuery("#next_chap").attr("href") + "?dir=left"
+		jQuery("#next_chap").attr( "href", sNewHref  )
+		
+		sNewHref = jQuery("#prev_chap").attr("href") + "?dir=left"
+		jQuery("#prev_chap").attr( "href", sNewHref  )
+		
+	}
+}else if( getUrlParameter('dir') == "right" || getUrlParameter('dir') == "r" || getUrlParameter('d') == "right" || getUrlParameter('d') == "r" ){
+	direction = "right"
+	if( jQuery("#next_chap").attr("href").indexOf("dir=right") == -1 ){
+		let sNewHref = jQuery("#next_chap").attr("href") + "?dir=right"
+		jQuery("#next_chap").attr( "href", sNewHref  )
+		
+		sNewHref = jQuery("#prev_chap").attr("href") + "?dir=right"
+		jQuery("#prev_chap").attr( "href", sNewHref  )
+		
+	}
+}else bFlip = false
 	
 if( bFlip == true ){
 	let iMaxWidth = window.innerHeight - 20 + "px"
@@ -95,7 +116,7 @@ jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 			let ofs = jQuery("body").attr("ofs")
 			ofs = parseInt( ofs ) + 1 
 			jQuery("body").attr("ofs", ofs)
-			let toLeft = ofs*200 + 120
+			let toLeft = ofs*180 + 120
 			jQuery("body").css({"transform":"rotate(90deg) translateY(-"+toLeft+"%)"})
 			onePageWidth = jQuery("body").offset().left + 558
 			console.log( onePageWidth )
@@ -272,3 +293,39 @@ function getUrlParameter(sParam) {
     }
     return false;
 };
+var br = document.getElementsByTagName('br'),
+        l = br.length,
+        i = 0,
+        nextelem, elemname, include;
+        
+    // Loop through tags
+    for (i; i < l - 1; i++) {
+        // This flag indentify we should hide the next element or not
+        include = false;
+        
+        // Getting next element
+        nextelem = br[i].nextSibling;
+        
+        // Getting element name
+        elemname = nextelem.nodeName.toLowerCase();
+        
+        // If element name is `br`, set the flag as true.
+        if (elemname == 'br') {
+            include = true;
+        }
+        
+        // If element name is `#text`, we face text node
+        else if (elemname == '#text') {
+            // If text node is only white space, we must pass it.
+            // This is because of something like this: `<br />   <br />`
+            if (! nextelem.data.replace(/\s+/g, '').length) {
+                nextelem = br[i+1];
+                include = true;
+            }
+        }
+        
+        // If the element is flagged as true, hide it
+        if (include) {
+            nextelem.style.display = 'none';
+        }
+    }
