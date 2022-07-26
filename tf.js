@@ -1,3 +1,4 @@
+// version 1.2
 jQuery("head").append('<style>\
 	.my-setting, #next_chap{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
 	.my-setting{line-height:200%;opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
@@ -6,6 +7,7 @@ jQuery("head").append('<style>\
 	.close-btn{z-index:999999}\
 	.cover-scroll{border-right:2px solid green;position: fixed;z-index:10;left: 0;right: 0; top: 0;bottom: 0;display:none;}\
 	.cover-scroll.active{display:block}\
+	body{overflow:scroll !important; }\
 	/*.my-setting,#next_chap{top: 100%;transform: translateY(-100%);}*/\
 	.pdown{}\
 	\
@@ -135,7 +137,10 @@ jQuery("body").on("click", ".pdown, .cover-scroll", function(){
 	
 	
 })
-jQuery("body").prepend('<button class="fullscreen">Full Screen</button>')
+
+jQuery("body").prepend('<button class="exitfullscreen">Exit Full Screen</button>')
+jQuery("body").prepend('<button class="fullscreen">Full Screen</button>&ensp;&ensp;')
+
 jQuery(".fullscreen").click(function(){
 	console.log("clicked fullscreen")
 	var elem = document.querySelector("body"); 
@@ -144,8 +149,10 @@ jQuery(".fullscreen").click(function(){
 	}else{
 		console.log("not work")
 	}
-
 });
+jQuery(".exitfullscreen").click(function(){
+	document.exitFullscreen()
+})
 
 //setting
 jQuery("body").append( '<div class="my-setting"><span class="glyphicon glyphicon-cog"></span></div>' )
