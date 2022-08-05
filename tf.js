@@ -1,6 +1,6 @@
-// version 1.4
+// version 1.5
 jQuery("head").append('<style>\
-	.my-setting, #next_chap{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
+	.my-setting, #next_chap,#nextChapter{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
 	.my-setting{line-height:200%;opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
 	.my-setting{cursor:pointer;opacity:0.3;right: auto;left:0;width:110px;transform:none;text-align:center;font-size:25px;}\
 	.my-setting.active{opacity:0.7}\
@@ -21,9 +21,11 @@ jQuery("head").append('<style>\
 	\
 	\
 	\
-	#wrap,.chapter .chapter-c {background:black;color:#7c7c7c}\
+	#wrap,.chapter .chapter-c, body {background:black !important;color:#7c7c7c}\
 	</style>')
 
+jQuery(".nh-read__alert").remove()
+jQuery("#read-comments").remove()
 var bFlip = false
 	bFlip = true
 var direction = "left"
@@ -194,9 +196,14 @@ if( bOpenCover ){
 // reset top of bottom button
 function reset_bottom_btn_top(){
 	let iWinH = window.innerHeight
-	let iNextBtnH = jQuery("#next_chap").outerHeight()
+    let iNextBtnH
+    if( jQuery("#next_chap").length )
+        iNextBtnH = jQuery("#next_chap").outerHeight()
+    else
+        iNextBtnH = jQuery("#nextChapter").outerHeight()
+
 	let iNewTop = iWinH - iNextBtnH
-	jQuery(".my-setting,.pdown,#next_chap").css("top", iNewTop + "px")
+	jQuery(".my-setting,.pdown,#next_chap,#nextChapter").css("top", iNewTop + "px")
 }
 reset_bottom_btn_top()
 
