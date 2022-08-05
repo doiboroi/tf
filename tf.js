@@ -1,4 +1,4 @@
-// version 1.3
+// version 1.4
 jQuery("head").append('<style>\
 	.my-setting, #next_chap{ opacity:0.5; position: fixed; right: 0; z-index: 99999; }\
 	.my-setting{line-height:200%;opacity:0.5;width:110px;height:47px;position:fixed;left:50%;background-color: #5cb85c;}\
@@ -7,7 +7,6 @@ jQuery("head").append('<style>\
 	.close-btn{z-index:999999}\
 	.cover-scroll{border-right:2px solid green;position: fixed;z-index:10;left: 0;right: 0; top: 0;bottom: 0;display:none;}\
 	.cover-scroll.active{display:block}\
-	body{overflow:scroll !important; }\
 	/*.my-setting,#next_chap{top: 100%;transform: translateY(-100%);}*/\
 	.pdown{}\
 	\
@@ -31,7 +30,7 @@ var direction = "left"
 direction = ""
 if( getUrlParameter('dir') == "left" || getUrlParameter('dir') == "l" || getUrlParameter('d') == "left" || getUrlParameter('d') == "l" ){
 	direction = "left"
-	if( jQuery("#next_chap").attr("href").indexOf("dir=left") == -1 ){
+	if( jQuery("#next_chap").length && jQuery("#next_chap").attr("href").indexOf("dir=left") == -1 ){
 		let sNewHref = jQuery("#next_chap").attr("href") + "?dir=left"
 		jQuery("#next_chap").attr( "href", sNewHref  )
 		
@@ -41,7 +40,7 @@ if( getUrlParameter('dir') == "left" || getUrlParameter('dir') == "l" || getUrlP
 	}
 }else if( getUrlParameter('dir') == "right" || getUrlParameter('dir') == "r" || getUrlParameter('d') == "right" || getUrlParameter('d') == "r" ){
 	direction = "right"
-	if( jQuery("#next_chap").attr("href").indexOf("dir=right") == -1 ){
+	if( jQuery("#next_chap").length && jQuery("#next_chap").attr("href").indexOf("dir=right") == -1 ){
 		let sNewHref = jQuery("#next_chap").attr("href") + "?dir=right"
 		jQuery("#next_chap").attr( "href", sNewHref  )
 		
@@ -53,15 +52,20 @@ if( getUrlParameter('dir') == "left" || getUrlParameter('dir') == "l" || getUrlP
 	
 if( bFlip == true ){
 	let iMaxWidth = window.innerHeight - 20 + "px"
+    console.log( "max width: " + iMaxWidth )
 	let wWidth = window.innerWidth - 50 + 'px'
 	jQuery("head").append('<style>\
-		*{max-width:'+iMaxWidth+' !important}\
+		*{max-width:'+iMaxWidth+' !important;min-width:auto !important}\
 		.navbar-header{display:none;}\
-		body{transform: rotate(-90deg);}\
+		body{transform: rotate(-90deg);height:'+iMaxWidth+'}\
 		.cover-scroll{height:5000px !important;}\
 		.my-setting, #next_chap{top:'+wWidth+' !important;opacity:0.1; transition:opacity 1s}\
 		.my-setting.active{opacity:0.2}\
 		.cover-scroll{height:'+wWidth+'}\
+		.nh-read__container{width:'+iMaxWidth+' !important}\
+		#js-read__body{padding:0 15px}\
+		#js-right-menu{top:0 !important}\
+		#js-read__content{font-size:22px !important;}\
 	</style>')
 	jQuery("#chapter-big-container").width(window.innerHeight - 20 )
 	jQuery("body").on("keypress", function(e){
