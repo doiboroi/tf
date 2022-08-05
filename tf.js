@@ -22,6 +22,7 @@ jQuery("head").append('<style>\
 	\
 	\
 	#wrap,.chapter .chapter-c, body {background:black !important;color:#7c7c7c}\
+	#js-read__content{font-size:22px !important}\
 	</style>')
 
 jQuery(".nh-read__alert").remove()
