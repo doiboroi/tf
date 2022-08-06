@@ -1,4 +1,4 @@
-// version 1.6
+// version 1.7
 
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
@@ -319,22 +319,6 @@ function truyenfull(){
 		})
 	}
 
-
-	function getUrlParameter(sParam) {
-	    var sPageURL = window.location.search.substring(1),
-	        sURLVariables = sPageURL.split('&'),
-	        sParameterName,
-	        i;
-
-	    for (i = 0; i < sURLVariables.length; i++) {
-	        sParameterName = sURLVariables[i].split('=');
-
-	        if (sParameterName[0] === sParam) {
-	            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-	        }
-	    }
-	    return false;
-	};
 	var br = document.getElementsByTagName('br'),
 	        l = br.length,
 	        i = 0,
@@ -462,26 +446,6 @@ function metruyenchu(){
 
 			return bNeedRemove
 		}).remove()
-
-
-		// jQuery("link").filter(function(){
-
-		// 	let that = jQuery(this)
-		// 	let bNeedRemove = false
-
-		// 	if( undefined == jQuery(this).attr('href') ){
-		// 		return false
-		// 	}
-			
-		// 	jQuery.each( aRemoveList, function(i,v){
-		// 	    if( that.attr('href').indexOf(v) != -1 ){
-		// 	    	bNeedRemove = true
-		// 	    	return false
-		// 	    }
-		// 	})
-
-		// 	return bNeedRemove
-		// }).remove()
 		
 	}
 
@@ -526,6 +490,65 @@ function metruyenchu(){
 
 
 
+		bFlip = true
+	var direction = "left"
+	direction = ""
+	if( getUrlParameter('dir') == "left" || getUrlParameter('dir') == "l" || getUrlParameter('d') == "left" || getUrlParameter('d') == "l" ){
+		direction = "left"
+		if( jQuery("#next_chap").length && jQuery("#next_chap").attr("href").indexOf("dir=left") == -1 ){
+			let sNewHref = jQuery("#next_chap").attr("href") + "?dir=left"
+			jQuery("#next_chap").attr( "href", sNewHref  )
+			
+			sNewHref = jQuery("#prev_chap").attr("href") + "?dir=left"
+			jQuery("#prev_chap").attr( "href", sNewHref  )
+			
+		}
+	}else if( getUrlParameter('dir') == "right" || getUrlParameter('dir') == "r" || getUrlParameter('d') == "right" || getUrlParameter('d') == "r" ){
+		direction = "right"
+		if( jQuery("#next_chap").length && jQuery("#next_chap").attr("href").indexOf("dir=right") == -1 ){
+			let sNewHref = jQuery("#next_chap").attr("href") + "?dir=right"
+			jQuery("#next_chap").attr( "href", sNewHref  )
+			
+			sNewHref = jQuery("#prev_chap").attr("href") + "?dir=right"
+			jQuery("#prev_chap").attr( "href", sNewHref  )
+			
+		}
+	}else bFlip = false
+		
+	if( bFlip == true ){
+		let iMaxWidth = window.innerHeight - 20 + "px"
+	    console.log( "max width: " + iMaxWidth )
+		let wWidth = window.innerWidth - 50 + 'px'
+		jQuery("head").append('<style>\
+			*{max-width:'+iMaxWidth+' !important;min-width:auto !important}\
+			.navbar-header{display:none;}\
+			body{transform: rotate(-90deg);height:'+iMaxWidth+'}\
+			.cover-scroll{height:5000px !important;}\
+			.my-setting, #next_chap{top:'+wWidth+' !important;opacity:0.1; transition:opacity 1s}\
+			.my-setting.active{opacity:0.2}\
+			.cover-scroll{height:'+wWidth+'}\
+			.nh-read__container{width:'+iMaxWidth+' !important}\
+			#js-read__body{padding:0 15px}\
+			#js-right-menu{top:0 !important}\
+			#js-read__content{font-size:22px !important;}\
+		</style>')
+		jQuery("#chapter-big-container").width(window.innerHeight - 20 )
+		jQuery("body").on("keypress", function(e){
+			if( e.which == 32 ){
+				jQuery(".cover-scroll").click()
+			}
+		})
+		
+		if( direction == "right" ){
+			jQuery("head").append('<style>\
+				body{transform: rotate(90deg);transform: rotate(90deg) translateY(-120%);}\
+			</style>')
+			jQuery("body").attr("ofs", 0)
+		}
+	}
+
+
+
 
 	// cover scroll
 	jQuery("body").append('<div class="cover-scroll"></div>')
@@ -555,14 +578,14 @@ function metruyenchu(){
 				let toLeft = ofs*180 + 120
 				jQuery("body").css({"transform":"rotate(90deg) translateY(-"+toLeft+"%)"})
 				onePageWidth = jQuery("body").offset().left + 558
-				console.log( onePageWidth )
-				jQuery(".my-setting, #next_chap").attr("style", "width: 170px;top:"+onePageWidth + "px !important")
-				console.log( "onePageWidth: " + onePageWidth )
+				// console.log( onePageWidth )
+				jQuery(".my-setting, #next_chap, .next-chapter").attr("style", "width: 170px;top:"+onePageWidth + "px !important")
+				// console.log( "onePageWidth: " + onePageWidth )
 				
 			}else{
 				jQuery(window).scrollLeft( onePageWidth );
 				onePageWidth += wW - 50
-				jQuery(".my-setting, #next_chap").attr("style", "width: 170px;top:"+onePageWidth + "px !important")
+				jQuery(".my-setting, #next_chap, .next-chapter").attr("style", "width: 170px;top:"+onePageWidth + "px !important")
 				console.log( "onePageWidth: " + onePageWidth )
 			}
 		}else{
@@ -570,8 +593,6 @@ function metruyenchu(){
 			$('html,body').animate({scrollTop:onePage}, 150);
 			console.log("scrollTop: " + onePage)
 		}
-		
-		
 	})
 
 	jQuery("body").prepend('<button class="exitfullscreen">Exit Full Screen</button>')
@@ -609,19 +630,6 @@ function metruyenchu(){
 	jQuery(".cover-scroll").css("display","block")
 	localStorage.setItem('bOpenCover', true)
 	bOpenCover = true
-	// if( undefined == localStorage.getItem('bOpenCover') || localStorage.getItem('bOpenCover') == ""|| localStorage.getItem('bOpenCover') == "false" ){
-	//     bOpenCover = false
-	// }else{
-	//     bOpenCover = true
-	// }
-
-
-	// if( bOpenCover ){
-	// 	if( !jQuery(".my-setting").hasClass("active") ){
-	// 		jQuery(".my-setting").click()
-	// 		localStorage.setItem('bOpenCover', true) 
-	// 	}
-	// }
 
 	jQuery("body").on("click", ".next-chapter", function(){
 		var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
@@ -660,4 +668,36 @@ function metruyenchu(){
 		reset_bottom_btn_top()
 	})
 
+
+	jQuery(".cover-scroll").after('<button class="toleft">Left</button><button class="toright">Right</button>')
+
+	jQuery("head").append( '<style>.toleft,.toright{position:fixed;top:50%;left:0;opacity:0.7;z-index:99999;} .toright{right:0;left:auto}</style>' )
+	jQuery(".toleft,.toright").click(function(){
+	    var sNewHref= window.location.href.split("?")[0]
+	    if( jQuery(this).hasClass('toright') )
+	        sNewHref += "?dir=right"
+	    else
+	        sNewHref +=  "?dir=left"
+
+	    window.location.href = sNewHref
+
+	})
+
 }
+
+
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};
