@@ -657,10 +657,13 @@ function metruyenchu(){
 	bOpenCover = true
 
 	jQuery("body").on("click", ".next-chapter", function(){
-		// var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
-		// nextChapter += "chuong-" + window.chapterRes.data._data.next_index
-		// window.location.href = nextChapter
-		window.location.href = jQuery(this).attr('href')
+		
+		if( jQuery(this).attr('href') == undefined ){
+			var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
+			nextChapter += "chuong-" + window.chapterRes.data._data.next_index
+			window.location.href = nextChapter
+		}else
+			window.location.href = jQuery(this).attr('href')
 	})
 
 
