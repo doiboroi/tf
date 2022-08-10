@@ -1,4 +1,4 @@
-// version 1.7
+// version 1.8
 
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
@@ -386,6 +386,11 @@ function metruyenchu(){
 	var bFlip = false
 	main()
 
+	jQuery("body").prepend('<button class="exitfullscreen">Exit Full Screen</button>')
+	jQuery("body").prepend('<button class="fullscreen">Full Screen</button>&ensp;&ensp;')
+	jQuery("body").append( '<div class="my-setting"><span class="glyphicon glyphicon-cog"></span></div>' )
+	jQuery("body").append( '<div class="next-chapter"><span class="glyphicon glyphicon-cog"></span>Next</div>' )
+
 	function main(){
 		removead()
 		
@@ -490,31 +495,53 @@ function metruyenchu(){
 
 
 
-		bFlip = true
+	bFlip = true
 	var direction = "left"
 	direction = ""
 	if( getUrlParameter('dir') == "left" || getUrlParameter('dir') == "l" || getUrlParameter('d') == "left" || getUrlParameter('d') == "l" ){
 		direction = "left"
+		
+
+
 		if( jQuery("#next_chap").length && jQuery("#next_chap").attr("href").indexOf("dir=left") == -1 ){
 			let sNewHref = jQuery("#next_chap").attr("href") + "?dir=left"
 			jQuery("#next_chap").attr( "href", sNewHref  )
-			
+
 			sNewHref = jQuery("#prev_chap").attr("href") + "?dir=left"
 			jQuery("#prev_chap").attr( "href", sNewHref  )
-			
+		}
+
+		if( jQuery(".next-chapter").length && (undefined == jQuery(".next-chapter").attr("href") || jQuery(".next-chapter").attr("href").indexOf("dir=left") == -1) ){
+
+			var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
+			nextChapter += "chuong-" + window.chapterRes.data._data.next_index + "?dir=left"
+
+			jQuery(".next-chapter").attr("href",nextChapter)
 		}
 	}else if( getUrlParameter('dir') == "right" || getUrlParameter('dir') == "r" || getUrlParameter('d') == "right" || getUrlParameter('d') == "r" ){
 		direction = "right"
+		
+
 		if( jQuery("#next_chap").length && jQuery("#next_chap").attr("href").indexOf("dir=right") == -1 ){
 			let sNewHref = jQuery("#next_chap").attr("href") + "?dir=right"
 			jQuery("#next_chap").attr( "href", sNewHref  )
 			
 			sNewHref = jQuery("#prev_chap").attr("href") + "?dir=right"
 			jQuery("#prev_chap").attr( "href", sNewHref  )
+			alert("next chapter href change2")
+		}
+
+		if( jQuery(".next-chapter").length && (undefined == jQuery(".next-chapter").attr("href") || jQuery(".next-chapter").attr("href").indexOf("dir=right") == -1) ){
+			var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
+			nextChapter += "chuong-" + window.chapterRes.data._data.next_index + "?dir=right"
 			
+			jQuery(".next-chapter").attr("href",nextChapter)
 		}
 	}else bFlip = false
-		
+
+	
+
+
 	if( bFlip == true ){
 		let iMaxWidth = window.innerHeight - 20 + "px"
 	    console.log( "max width: " + iMaxWidth )
@@ -595,8 +622,7 @@ function metruyenchu(){
 		}
 	})
 
-	jQuery("body").prepend('<button class="exitfullscreen">Exit Full Screen</button>')
-	jQuery("body").prepend('<button class="fullscreen">Full Screen</button>&ensp;&ensp;')
+
 
 	jQuery(".fullscreen").click(function(){
 		console.log("clicked fullscreen")
@@ -611,8 +637,7 @@ function metruyenchu(){
 		document.exitFullscreen()
 	})
 	//setting
-	jQuery("body").append( '<div class="my-setting"><span class="glyphicon glyphicon-cog"></span></div>' )
-	jQuery("body").append( '<div class="next-chapter"><span class="glyphicon glyphicon-cog"></span>Next</div>' )
+	
 	jQuery(".my-setting").css("width", iNextW + "px")
 	jQuery("body").on("click",'.my-setting', function(){
 		jQuery(this).toggleClass("active")
@@ -632,9 +657,10 @@ function metruyenchu(){
 	bOpenCover = true
 
 	jQuery("body").on("click", ".next-chapter", function(){
-		var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
-		nextChapter += "chuong-" + window.chapterRes.data._data.next_index
-		window.location.href = nextChapter
+		// var nextChapter = window.location.href.split( window.location.href.split("/")[5] )[0]
+		// nextChapter += "chuong-" + window.chapterRes.data._data.next_index
+		// window.location.href = nextChapter
+		window.location.href = jQuery(this).attr('href')
 	})
 
 
@@ -682,6 +708,29 @@ function metruyenchu(){
 	    window.location.href = sNewHref
 
 	})
+
+
+	document.onkeydown = checkKey;
+
+	function checkKey(e) {
+
+	    e = e || window.event;
+
+	    if (e.keyCode == '38') {
+	        // up arrow
+	    }
+	    else if (e.keyCode == '40') {
+	        // down arrow
+	    }
+	    else if (e.keyCode == '37') {
+	       // left arrow
+	    }
+	    else if (e.keyCode == '39') {
+	       // right arrow 
+	       jQuery(".next-chapter").click()
+	    }
+
+	}
 
 }
 
