@@ -1,4 +1,4 @@
-// version 1.8
+// version 1.9
 
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
@@ -123,10 +123,11 @@ function truyenfull(){
 
 
 	jQuery("body").on("click", ".pdown, .cover-scroll", function(){
+		//console.log("clicked cover scroll - truyenfull")
 		let wH = window.innerHeight
 		let wW = window.innerWidth
 		//let wSc = jQuery(window).scrollTop()
-		let wSc = $('body').scrollTop()
+		let wSc = $('html,body').scrollTop()
 		let wScL = jQuery(window).scrollLeft();
 
 		let onePage = wH + wSc - 70
@@ -151,6 +152,7 @@ function truyenfull(){
 			}
 		}else{
 			//jQuery(window).scrollTop( onePage )
+			console.log( "onepage scroll: " + onePage)
 			$('html,body').animate({scrollTop:onePage}, 150);
 		}
 		
@@ -640,6 +642,7 @@ function metruyenchu(){
 	
 	jQuery(".my-setting").css("width", iNextW + "px")
 	jQuery("body").on("click",'.my-setting', function(){
+		console.log("clicked setting")
 		jQuery(this).toggleClass("active")
 		if( jQuery(this).hasClass("active") ){
 			jQuery(".cover-scroll").css("display","block")
