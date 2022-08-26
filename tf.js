@@ -1,5 +1,4 @@
-// version 1.9
-
+// version 1.9.1
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
 	truyenfull()
@@ -109,6 +108,11 @@ function truyenfull(){
 			jQuery(".winh").text( window.innerHeight )
 		}, 100 )
 	}
+
+	setTimeout(function(){
+		jQuery(".my-setting").removeClass("active")
+		jQuery(".my-setting, .btn-chapter-nav").css("opacity","0.1");
+	},2000)
 
 
 	// cover scroll
