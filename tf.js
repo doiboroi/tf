@@ -420,7 +420,7 @@ function metruyenchu(){
 			//remove iframe wrapper
 			jQuery(".tpm_attribution").remove()
 			jQuery(".pt-3.text-center").remove()
-			jQuery(".text-center.nh-read__alert.mb-3, .pb-3.text-center").remove()
+			jQuery(".text-center.nh-read__alert.mb-3, .pb-3.text-center, .tpm-unit").remove()
 			jQuery(".parent_zmedia_metruyenchu_mobile").remove()
 			jQuery(".nh-read__pagination").remove()
 
