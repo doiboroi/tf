@@ -32,6 +32,12 @@ function truyenfull(){
 		\
 		#wrap,.chapter .chapter-c, body {background:black !important;color:#7c7c7c}\
 		#js-read__content{font-size:22px !important}\
+		\
+		\
+		\
+		@media screen and (max-width:767px){\
+			.toleft,.toright{display:none;}\
+		}\
 		</style>')
 
 	jQuery(".nh-read__alert").remove()
@@ -291,6 +297,7 @@ function truyenfull(){
 			jQuery(".nt-fl-ad").remove()
 			jQuery("#ads-inpage-container").remove()
 			jQuery(".ads-responsive").remove()
+			jQuery(".ads-chapter-box").remove()
 		}
 
 		remove_ad()
