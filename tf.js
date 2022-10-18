@@ -1,4 +1,4 @@
-// version 1.9.1
+// version 1.9.2
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
 	truyenfull()
@@ -261,10 +261,14 @@ function truyenfull(){
 		// remove bottom right ads
 		var iCount = 1000
 		var waitAdInterval = setInterval(function(){
+                        if( jQuery('div[id*=fly]').length ){
+                            jQuery('div[id*=fly]').remove();
+                        }
 			if( jQuery("div[id^=fly]").length || iCount-- <=0){
 				jQuery("div[id^=fly]").remove()
 				clearInterval( waitAdInterval)
 			}
+                        
 		},100)
 
 
