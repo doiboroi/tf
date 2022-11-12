@@ -2,7 +2,7 @@
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
 	truyenfull()
-}else if( sURL.indexOf('metruyenchu') != -1 ){
+}else if( sURL.indexOf('metruyenchu') != -1 || sURL.indexOf('metruyencv') != -1 ){
 	metruyenchu()
 }
 
