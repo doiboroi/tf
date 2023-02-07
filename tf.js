@@ -1,4 +1,4 @@
-// version 1.9.2
+var iVersion = "1.9.3";
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
 	truyenfull()
@@ -30,7 +30,7 @@ function truyenfull(){
 		\
 		\
 		\
-		#wrap,.chapter .chapter-c, body {background:black !important;color:#7c7c7c}\
+		#wrap,.chapter .chapter-c, body, #footer {background:black !important;color:#7c7c7c}\
 		#js-read__content{font-size:22px !important}\
 		\
 		\
@@ -40,8 +40,16 @@ function truyenfull(){
 		}\
 		</style>')
 
+	// remove banner ads
+	jQuery("#ads-install-app").remove();
 	jQuery(".nh-read__alert").remove()
+	jQuery(".ads-holder").remove()
 	jQuery("#read-comments").remove()
+
+	// remove iframe wrapper
+	jQuery("#ads-chapter-bottom-truyentranh").remove();
+
+
 	var bFlip = false
 		bFlip = true
 	var direction = "left"
@@ -169,7 +177,7 @@ function truyenfull(){
 		
 	})
 
-	jQuery("body").prepend('<button class="exitfullscreen">Exit Full Screen</button>')
+	jQuery("body").prepend('<button class="exitfullscreen">Exit Full Screen '+iVersion+'</button>')
 	jQuery("body").prepend('<button class="fullscreen">Full Screen</button>&ensp;&ensp;')
 
 	jQuery(".fullscreen").click(function(){
@@ -418,6 +426,10 @@ function metruyenchu(){
 	}
 
 	function removead(){
+
+		// remove banner ads
+		jQuery("#ads-install-app").remove();
+
 		// remove iframe
 		iframeMCC = window.setInterval(function(){
 			console.log("checking iframe" + jQuery("iframe").length )
