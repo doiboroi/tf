@@ -1,4 +1,4 @@
-var iVersion = "1.9.3";
+var iVersion = "1.9.3"; 
 let sURL = window.location.href;
 if( sURL.indexOf('truyenfull') != -1 ){
 	truyenfull()
